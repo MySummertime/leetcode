@@ -1,0 +1,13 @@
+1805. Number of Different Integers in a String
+1. Use regular expressions to match strings
+    1. re.findall(pattern, string, flag = 0)
+    2. find all sub_strings from string which matches pattern, return them within an array
+2. Use Set to de-duplicate
+    1. auxilliary array ans contains all sub-elements
+    2. use for... to import all elements into set
+    3. because of ignoring all leading zeros, we use int(i) to traverse every i into int first
+
+class Solution:
+    def numDifferentIntegers(self, word: str) -> int:
+        ans = re.findall("\d+", word)
+        return len(set([int(i) for i in ans]))
