@@ -1,0 +1,20 @@
+1608. Special Array With X Elements Greater Than or Equal X
+1. traverse the array using sort(rbegin(), rend());
+2. iterate, compare step by step
+
+class Solution{
+public:
+    int specialArray(vector<int>& nums){
+        sort(nums.rbegin(), nums.rend());   //逆转数组
+        nums.push_back(0);
+        for(int i = 1; i < nums.size(); ++i){
+            if(nums[i - 1] < i){
+                break;
+            }
+            if(nums[i] < i){
+                return i;
+            }
+        }
+        return -1;
+    }
+};
