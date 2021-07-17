@@ -1,0 +1,21 @@
+1800. Maximum Ascending Subarray Sum
+1. traverse the array to find the ascending sub-array
+2. carefully set the boundary conditions:
+    index start from 1;
+    compare this element with the previous;
+    the end of the traversal is i < nums.length；(used to set i <= nums.length which is false, because index is always less than the length by 1)
+    
+function maxAscendingSum(nums: number[]): number {
+    let ans: number = nums[0];
+    let sum: number = nums[0];
+    for(let i: number = 1; i < nums.length; ++i){
+        if(nums[i - 1] < nums[i]){
+            sum += nums[i];
+        }
+        else{
+            sum = nums[i];
+        }
+        ans = Math.max(ans, sum);
+    }
+    return ans;
+};
