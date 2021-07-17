@@ -1,6 +1,6 @@
 1929. Concatenation of Arrays
-1. using the operator(...);
-2. parse the array into a sequence of parameters seperated by commas;
+    using the operator(...) 
+    to parse the array into a sequence of parameters seperated by commas;
 
 function getConcatenation(nums: number[]): number[]{
     return [...nums, nums];
