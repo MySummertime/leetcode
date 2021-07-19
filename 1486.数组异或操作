@@ -1,0 +1,9 @@
+1486. XOR Operation in an Array
+iterative formula: result = start + 2 * n
+
+class Solution:
+    def xorOperation(self, n: int, start: int) -> int:
+        result = 0
+        for i in (start + 2 * i for i in range(n)):
+            result ^= i
+        return result
