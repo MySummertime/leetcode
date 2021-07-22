@@ -1,0 +1,23 @@
+1486. XOR Operation in an Array
+Do XOR for consecutive integers, returns n or 1 or n + 1 or 0.
+
+function xorOperation(n: number, start: number): number{
+    let s: number = start >> 1;
+    let ans: number = cal(s - 1) ^ cal(s + n - 1);
+    let end: number = n & start & 1;
+    ans = ans << 1;
+    return ans | end;
+};
+
+function cal(n: number): number{
+    if(n % 4 === 0){
+        return n;
+    }
+    else if(n % 4 === 1){
+        return 1;
+    }
+    else if(n % 4 === 2){
+        return n + 1;
+    }
+    return 0;
+};
