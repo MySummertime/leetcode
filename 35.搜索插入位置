@@ -1,0 +1,23 @@
+35. Search Insert Position
+
+1. The premise of using dichotomy is that the array is ordered;
+2. Boundary condition is leftIndex < rightIndex for left-closed & right-open interval;
+3. Last loop: leftIndex < rightIndex, if didn't find, then exit loop;
+
+function searchInsert(nums: number[], target: number): number {
+    let s: number = 0;
+    let e: number = nums.length;
+    while(s < e){       //排序数组中，取左闭右开区间，进行二分
+        let m: number = s + ((e - s) >> 1);
+        if(nums[m] > target){
+            e = m;
+        }
+        else if(nums[m] < target){
+            s = m + 1;
+        }
+        else{
+            return m;
+        }
+    }
+    return e;
+};
