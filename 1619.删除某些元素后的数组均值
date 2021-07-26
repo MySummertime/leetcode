@@ -1,0 +1,35 @@
+1619. Mean of Array After Removing Some Elements
+
+1. arr.splice()
+  1.if parameters are all positive: the 1st parameter is the index to start truncating, the 2nd parameter is the length to be truncated;
+  2.if parameters include negative: the 1st parameter is the index to start truncating(from right to left), the 2nd parameter is the length to be truncated,
+  and if the 2nd parameter is omitted, delete all the elements behind the 1st parameter;
+2. type of data
+  1.number type is the only way to represent a number in typescript;
+  2.because the return value doesn't need to be rounded, so we use ordinary division operation(/) directly;
+3. arr.reduce()
+  1.reduce = for Loop = for...each Loop;
+  2.it calls back every element that exists in the array;
+  
+method 1:
+function trimMean(arr: number[]): number{
+    arr.sort((a, b) => a - b);
+    let len: number = arr.length * 0.05;
+    arr.splice(0, len);
+    arr.splice(-len);
+    let sum: number = 0;
+    for(let i: number = 0; i < arr.length; ++i){
+        sum += arr[i];
+    }
+    return sum / arr.length;
+};
+
+method 2:
+function trimMean(arr: number[]): number{
+    arr.sort((a, b) => a - b);
+    let len: number = arr.length * 0.05;
+    arr.splice(0, len);
+    arr.splice(-len);
+    let sum: number = arr.reduce((a, b) => a + b, 0);
+    return sum / arr.length;
+};
