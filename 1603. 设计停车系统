@@ -6,34 +6,26 @@ construct the ParkingSystem class:
   4. carType can be of three kinds: big, medium, or small, which are represented by 1, 2, and 3 respectively. 
   5. A car can only park in a parking space of its carType. If there is no space available, return false, else park the car in that size space and return true.
   
+  we use a const int fakeType to simulate a place holder so that we don't need to substract 1 before we access array elements any time;
   
   /**
    * Your ParkingSystem object will be instantiated and called as such:
-   * var obj = new ParkingSystem(big, medium, small)
-   * var param_1 = obj.addCar(carType)
+   * ParkingSystem* obj = new ParkingSystem(big, medium, small);
+   * bool param_1 = obj->addCar(carType);
    */
    
-  /**
-   * @param {number} big
-   * @param {number} medium
-   * @param {number} small
-  **/
-  var ParkingSystem = function(big, medium, small) {
-      this.carArr = {
-          1: big,
-          2: medium,
-          3: small,
+  class ParkingSystem {
+  public:
+      ParkingSystem(int big, int medium, int small){
+          park = {fakeType, big, medium, small};
       }
-  };
 
-  /** 
-   * @param {number} carType
-   * @return {boolean}
-  **/
-  ParkingSystem.prototype.addCar = function(carType) {
-      if (this.carArr[carType]) {
-          this.carArr[carType] -= 1;
-          return true;
+      bool addCar(int carType) {
+          return park[carType]-- > 0;
       }
-      return false;
+
+  private:
+      const int fakeType = 0;
+      vector<int> park;
+
   };
