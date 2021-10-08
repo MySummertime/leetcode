@@ -1,4 +1,4 @@
-construct the ParkingSystem class:
+construct the ParkingSystem class: we use hash_map to construct the constructor
 
   1. use ParkingSystem(int big, int medium, int small) to initialize the object of this object;
   2. the number of slots for each parking space are given as part of the constructor.
