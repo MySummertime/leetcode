@@ -1,0 +1,42 @@
+use 2 array to simulate the FIFO queue;
+
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * var obj = new MyQueue()
+ * obj.push(x)
+ * var param_2 = obj.pop()
+ * var param_3 = obj.peek()
+ * var param_4 = obj.empty()
+**/
+
+class MyQueue {
+    constructor() {}
+
+    push(x: number): void {
+        this.i_st.push(x);
+    }
+
+    pop(): number {
+        !this.o_st.length && this.transfer();
+        return this.o_st.pop();
+    }
+
+    peek(): number {
+        !this.o_st.length && this.transfer();
+        return this.o_st[this.o_st.length - 1];
+    }
+
+    empty(): boolean {
+        return this.o_st.length == 0 && this.i_st.length == 0;
+    }
+
+    private i_st: number[] = [];
+    private o_st: number[] = [];
+
+    private transfer(): void {
+        while (this.i_st.length) {
+            this.o_st.push(this.i_st.pop());
+        }
+    }
+}
