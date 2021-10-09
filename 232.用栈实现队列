@@ -1,0 +1,56 @@
+use 2 stacks to simulate the FIFO queue
+  
+  1. we define the 2 stacks in private domain;
+  2. we use stack methods as normal, such as stack.pop(), stack.push(), stack.top(), stack.empty() ;
+  
+
+  /**
+   * Your MyQueue object will be instantiated and called as such:
+   * MyQueue* obj = new MyQueue();
+   * obj->push(x);
+   * int param_2 = obj->pop();
+   * int param_3 = obj->peek();
+   * bool param_4 = obj->empty();
+  **/
+  class MyQueue {
+  public:
+      MyQueue() {}
+
+      void push(int x) {
+          i_st.push(x);
+      }
+
+      int pop() {
+          if (o_st.empty()) {
+              while (!i_st.empty()) {
+                  o_st.push(i_st.top());
+                  i_st.pop();
+              }
+          }
+          int top = o_st.top();
+          o_st.pop();
+          return top;
+      }
+
+      int peek() {
+          if (o_st.empty()) {
+              while (!i_st.empty()) {
+                  o_st.push(i_st.top());
+                  i_st.pop();
+              }
+          }
+          return o_st.top();
+      }
+
+      bool empty() {
+          if (o_st.empty() && i_st.empty()) {
+              return 1;
+          }
+          return 0;
+      }
+
+  private:
+      stack<int> i_st;
+      stack<int> o_st;
+
+  };
