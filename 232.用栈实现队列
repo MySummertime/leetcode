@@ -1,4 +1,4 @@
-1. we use 2 array to simulate the FIFO queue;
+1. we use 2 array to simulate the FIFO queue in TS;
 
 
     /**
@@ -44,7 +44,7 @@
 
 
 
-2. we use 1 array to simulate the FIFO queue;
+2. we use 1 array to simulate the FIFO queue in TS;
 
 
     /**
@@ -75,5 +75,57 @@
 
         empty(): boolean {
             return !this.st.length;
+        }
+    }
+
+
+3. we use 2 array to simulate the FIFO queue in JS;
+
+
+    /**
+     * Your MyQueue object will be instantiated and called as such:
+     * var obj = new MyQueue()
+     * obj.push(x)
+     * var param_2 = obj.pop()
+     * var param_3 = obj.peek()
+     * var param_4 = obj.empty()
+    **/
+    var MyQueue = function() {
+        this.i_st = [];
+        this.o_st = [];
+    };
+    /**
+     * @param {number} x
+     * @return {void}
+     */
+    MyQueue.prototype.push = function(x) {
+        this.i_st.push(x);
+    };
+    /**
+     * @return {number}
+     */
+    MyQueue.prototype.pop = function() {
+        !this.o_st.length && this.transfer();
+        return this.o_st.pop();
+    };
+    /**
+     * @return {number}
+     */
+    MyQueue.prototype.peek = function() {
+        !this.o_st.length && this.transfer();
+        return this.o_st[this.o_st.length - 1];
+    };
+    /**
+     * @return {boolean}
+     */
+    MyQueue.prototype.empty = function() {
+        return this.i_st.length == 0 && this.o_st.length == 0;
+    };
+    /**
+     * @return {number}
+     */
+    MyQueue.prototype.transfer = function() {
+        while (this.i_st.length) {
+            this.o_st.push(this.i_st.pop());
         }
     }
