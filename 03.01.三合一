@@ -1,5 +1,6 @@
-use 1 array to simulate 3 stacks;
+1. use 1 array to simulate 3 stacks;
 
+  we use a one-dimensional array
 
   /**
    * Your TripleInOne object will be instantiated and called as such:
