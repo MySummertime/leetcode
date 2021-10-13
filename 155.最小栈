@@ -1,0 +1,48 @@
+using 1 array & 1 auxilliary array to simulate a stack which could get the least element within itself in constant time
+
+
+
+  /**
+   * Your MinStack object will be instantiated and called as such:
+   * var obj = new MinStack()
+   * obj.push(val)
+   * obj.pop()
+   * var param_3 = obj.top()
+   * var param_4 = obj.getMin()
+  **/
+  class MinStack {
+
+      st: Array<number> = [];
+      min_st:Array<number> = [];
+
+      constructor() {}
+
+      push(val: number): void {
+          this.st.push(val);
+          const min_tmp = this.getMin();
+          if (min_tmp === null || min_tmp >= val) {   //make the least element staying in the bottom of the stack
+              this.min_st.push(val);
+          }
+      }
+
+      pop(): void {
+          const tmp = this.top();
+          if (tmp === null) {
+              return;
+          }
+          this.st.pop();
+          if (tmp === this.getMin()) {
+              this.min_st.pop();
+          }
+      }
+
+      top(): number {
+          const len = this.st.length;
+          return len ? this.st[len - 1] : null;
+      }
+
+      getMin(): number {
+          const len = this.min_st.length;
+          return len ? this.min_st[len - 1] : null;
+      }
+  }
