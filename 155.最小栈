@@ -1,4 +1,4 @@
-using a list & an auxilliary list to simulate a stack which could get the least element within the stack
+using a list & an auxilliary list to simulate a stack which could get the least element within itself in constant time
 
 
   # Your MinStack object will be instantiated and called as such:
