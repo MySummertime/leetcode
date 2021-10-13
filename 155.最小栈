@@ -1,0 +1,30 @@
+using a list & an auxilliary list to simulate a stack which could get the least element within the stack
+
+
+  # Your MinStack object will be instantiated and called as such:
+  # obj = MinStack()
+  # obj.push(val)
+  # obj.pop()
+  # param_3 = obj.top()
+  # param_4 = obj.getMin()
+  
+  class MinStack:
+
+      def __init__(self):
+          self.st = []
+          self.min_st = []    #auxilliary stack
+
+      def push(self, val: int) -> None:
+          self.st.append(val)
+          if not self.min_st or val <= self.min_st[-1]:
+              self.min_st.append(val)
+
+      def pop(self) -> None:
+          if self.st.pop() == self.min_st[-1]:
+              self.min_st.pop()
+
+      def top(self) -> int:
+          return self.st[-1]
+
+      def getMin(self) -> int:
+          return self.min_st[-1]
