@@ -1,1 +1,54 @@
+using 1 vector that construced by a list to simulate the hash_set
 
+
+  /**
+   * Your MyHashSet object will be instantiated and called as such:
+   * MyHashSet* obj = new MyHashSet();
+   * obj->add(key);
+   * obj->remove(key);
+   * bool param_3 = obj->contains(key);
+  **/
+  class MyHashSet {
+  public:
+      MyHashSet(){
+          vec.resize(base);
+      }
+
+      void add(int key) {
+          int idx = hash(key);
+          for (auto it = vec[idx].begin(); it != vec[idx].end(); ++it) {
+              if ((*it) == key) {
+                  return;
+              }
+          }
+          vec[idx].emplace_back(key);
+      }
+
+      void remove(int key) {
+          int idx = hash(key);
+          for (auto it = vec[idx].begin(); it != vec[idx].end(); ++it) {
+              if ((*it) == key) {
+                  vec[idx].erase(it);     //use earse, not remove
+                  return;
+              }
+          }
+      }
+
+      bool contains(int key) {
+          int idx = hash(key);
+          for (auto it = vec[idx].begin(); it != vec[idx].end(); ++it) {
+              if ((*it) == key) {
+                  return true;
+              }
+          }
+          return false;
+      }
+
+  private:
+      static const int base = 119;
+      std::vector<std::list<int>> vec;    //construct a vector that each value is formed by a list
+
+      static int hash(int key) {
+          return key % base;
+      }
+  };
