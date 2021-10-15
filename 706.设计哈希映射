@@ -1,0 +1,57 @@
+use 1 vector that constructed by several pair lists to simulate the hash map;
+
+
+  /**
+   * Your MyHashMap object will be instantiated and called as such:
+   * MyHashMap* obj = new MyHashMap();
+   * obj->put(key,value);
+   * int param_2 = obj->get(key);
+   * obj->remove(key);
+  **/
+
+  class MyHashMap {
+  public:
+      MyHashMap() {
+          vec.resize(base);
+      }
+
+      void put(int key, int value) {
+          int idx = hash(key);
+          for (auto it = vec[idx].begin(); it != vec[idx].end(); ++it) {
+              if ((*it).first == key) {
+                  (*it).second = value;
+                  return;
+              }
+          }
+          vec[idx].emplace_back(make_pair(key, value));
+      }
+
+      int get(int key) {
+          int idx = hash(key);
+          for (auto it = vec[idx].begin(); it != vec[idx].end(); ++it) {
+              if ((*it).first == key) {
+                  return (*it).second;
+              }
+          }
+          return exp;
+      }
+
+      void remove(int key) {
+          int idx = hash(key);
+          for (auto it = vec[idx].begin(); it != vec[idx].end(); ++it) {
+              if ((*it).first == key) {
+                  vec[idx].erase(it++);
+                  return;
+              }
+          }
+      }
+
+  private:
+      vector<list<pair<int, int>>> vec;
+      static const int base = 119;
+      const int exp = -1;
+
+      static int hash(int key) {
+          return key % base;
+      }
+  };
