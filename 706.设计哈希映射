@@ -1,0 +1,71 @@
+use 1 big array that constructed by sub-arrays
+
+  1. use the big array to store the key of hash pair;
+  2. use the sub arrays to store the values of hash pair;
+  3. use function hash(int) to search the required key, use offset 1 each time we don't find the key to simulate traversing arrays;
+  
+  
+  /**
+   * Your MyHashMap object will be instantiated and called as such:
+   * MyHashMap obj = new MyHashMap();
+   * obj.put(key,value);
+   * int param_2 = obj.get(key);
+   * obj.remove(key);
+  **/
+
+  class MyHashMap {
+      int offset = 1;
+      int len = 10009;
+
+      static class Node {
+          int key, value;
+          boolean wasDeleted;
+          Node(int _key, int _value) {
+              key = _key;
+              value = _value;
+          }
+      }
+      Node[] arr = new Node[len];
+
+      public MyHashMap() {}
+
+      public void put(int key, int value) {
+          int idx = hash(key);
+          Node node = arr[idx];
+          if (node != null) {
+              node.value = value;
+              node.wasDeleted = false;
+          }
+          else {
+              node = new Node(key, value);
+              arr[idx] = node;
+          }
+      }
+
+      public int get(int key) {
+          Node node = arr[hash(key)];
+          if (node == null) {
+              return -1;
+          }
+          return node.wasDeleted ? -1 : node.value;
+      }
+
+      public void remove(int key) {
+          Node node = arr[hash(key)];
+          if (node != null) {
+              node.wasDeleted = true;
+          }
+      }
+
+      int hash(int key) {
+          int loc = Integer.hashCode(key);
+          loc ^= (loc >>> 16);
+          int idx = loc % arr.length;
+          while (arr[idx] != null && arr[idx].key != key) {
+              loc += offset;
+              idx = loc % arr.length;
+          }
+          return idx;
+      }
+
+  }
