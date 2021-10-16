@@ -25,17 +25,34 @@ iterate the entire list, and use an auxiliary stack to flatten the list
    * while (i.hasNext()) cout << i.next();
    */
 
-    class NestedIterator {
-    public:
-        NestedIterator(vector<NestedInteger> &nestedList) {
+  class NestedIterator {
+  public:
+      NestedIterator(std::vector<NestedInteger> &nestedList) {
+          for (int i = nestedList.size() - 1; i >= 0; --i) {
+              st.push(nestedList[i]);
+          }
+      }
 
-        }
+      int next() {
+          NestedInteger topInt = st.top();
+          st.pop();
+          return topInt.getInteger();
+      }
 
-        int next() {
+      bool hasNext() {
+          while (!st.empty()) {
+              NestedInteger topInt = st.top();
+              if (topInt.isInteger()) {
+                  return true;
+              }
+              st.pop();
+              for (int i = topInt.getList().size() - 1; i >= 0; --i) {
+                  st.push(topInt.getList()[i]);
+              }
+          }
+          return false;
+      }
 
-        }
-
-        bool hasNext() {
-
-        }
-    };
+  private:
+      std::stack<NestedInteger> st;
+  };
