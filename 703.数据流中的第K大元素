@@ -1,0 +1,30 @@
+use priority_queue to help store all of the elements within the vector, and retrieve the largest element of all
+
+
+  /**
+   * Your KthLargest object will be instantiated and called as such:
+   * KthLargest* obj = new KthLargest(k, nums);
+   * int param_1 = obj->add(val);
+   */
+
+  class KthLargest {
+  public:
+      KthLargest(int k, vector<int>& nums) {
+          this->ref = k;
+          for (auto& i : nums) {
+              add(i);
+          }
+      }
+
+      int add(int val) {
+          que.push(val);
+          if (que.size() > ref) {
+              que.pop();
+          }
+          return que.top();
+      }
+
+  private:
+      priority_queue<int, vector<int>, greater<int>> que;
+      int ref;
+  };
