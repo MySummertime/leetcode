@@ -1,0 +1,70 @@
+use 1 vector to store 26 English char, determine whether the given word exists in the Trie tree while we traverse the word
+
+  1. we initialize the vector as nullptr, and initialize every given char while we traverse the given word;
+  2. we substract the same steps as a function searchWord(string);
+  3. we should remenber that we should return whetherboolean or null;
+  
+  
+  
+  /**
+   * Your Trie object will be instantiated and called as such:
+   * Trie* obj = new Trie();
+   * obj->insert(word);
+   * bool param_2 = obj->search(word);
+   * bool param_3 = obj->startsWith(prefix);
+   */
+  class TrieNode {
+  public:
+      TrieNode(): children(26, nullptr), wasWord(false) {}
+      ~TrieNode() {
+          for (auto& c : children) {
+              delete c;
+          }
+      }
+
+  public:
+      vector<TrieNode*> children;
+      bool wasWord;
+  };
+
+  class Trie {
+  public:
+      Trie() {
+          root = new TrieNode();
+      }
+
+      void insert(string word) {
+          TrieNode* ptr = root;
+          for (auto c : word) {
+              int i = c - 'a';
+              if (!ptr->children[i]) {
+                  ptr->children[i] = new TrieNode();
+              }
+              ptr = ptr->children[i];
+          }
+          ptr->wasWord = true;
+      }
+
+      bool search(string word) {
+          return findTrieNode(word, root) && findTrieNode(word, root)->wasWord;
+      }
+
+      bool startsWith(string prefix) {
+          return findTrieNode(prefix, root);
+      }
+
+  private:
+      TrieNode* root;
+
+      TrieNode* findTrieNode(string word, TrieNode* root) {
+          TrieNode* ptr = root;
+          for (auto c : word) {
+              int i = c - 'a';
+              if (!ptr->children[i]) {
+                  return nullptr;
+              }
+              ptr = ptr->children[i];
+          }
+          return ptr;
+      }
+  };
