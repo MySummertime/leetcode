@@ -1,0 +1,28 @@
+use a set to store every binary int within the array, traverse the binary Trie from high bit to low bit
+
+
+  /**
+   * @param {number[]} nums
+   * @return {number}
+   */
+  let findMaximumXOR = function(nums) {
+      let len = Math.max(...nums).toString(2).length;
+      let maxVal = 0;
+      let maxCur;
+      let prefixSet = new Set();
+
+      for (let i = len; i >= 0; --i) {
+          prefixSet.clear();
+          maxVal <<= i;
+          maxCur = maxVal | 1;
+          for (const num of nums) {
+              prefixSet.add(num >> i);
+          }
+          for (const prefix of prefixSet) {
+              if (prefixSet.has(prefix ^ maxCur)) {
+                  maxVal = maxCur;
+              }
+          }
+      }
+      return maxVal;
+  }
