@@ -2,8 +2,8 @@ use Trie structure to help traverse and define the right binary element
 
   1. we create a class Trie to initialize every binary element within the array nums;
   2. we create the property Trie.min_val to store the min digital value under each binary root of the Trie tree;
-  3. we create the properties Trie.left, Trie.right to record the next binary value we choose;
-  3. we try to choose the different binary value to make sure that we could get the max XOR result;
+  3. we create the properties Trie.left, Trie.right to represent the next binary value we choose;
+  4. we try to choose the different binary value to make sure that we could get the max XOR result;
   
 
 
