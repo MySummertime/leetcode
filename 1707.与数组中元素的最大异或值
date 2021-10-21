@@ -1,0 +1,63 @@
+use Trie structure to help traverse and define the right binary element
+
+  1. we create a class Trie to initialize every binary element within the array nums;
+  2. we create the property Trie.min_val to store the min digital value under each binary root of the Trie tree;
+  3. we try to choose the different binary value to make sure that we could get the max XOR result;
+  
+
+
+  #define INT_MAX int(2147483647)
+
+  class Trie {
+  public:
+      Trie* children[2] = {};
+      int minVal = INT_MAX;
+      const unsigned short bits = 30;
+
+  public:
+      void insert(int val) {
+          Trie* node = this;
+          node->minVal = std::min(val, node->minVal);  //record the min under current root
+          for (int i = bits - 1; i >= 0; --i) {
+              int cur_bit = (val >> i) & 1;
+              if (!node->children[cur_bit]) {
+                  node->children[cur_bit] = new Trie();
+              }
+              node = node->children[cur_bit];
+              node->minVal = std::min(val, node->minVal);
+          }
+      }
+
+      int getMaxXorVal(int val, int limit) {
+          Trie* node = this;
+          if (node->minVal > limit) {
+              return -1;
+          }
+          int ans = 0;
+          for (int i = bits - 1; i >= 0; --i) {
+              int cur_bit = (val >> i ) & 1;
+              if (node->children[cur_bit ^ 1] && node->children[cur_bit ^ 1]->minVal <= limit) {
+                  ans |= 1 << i;
+                  cur_bit ^= 1;
+              }
+              node = node->children[cur_bit];
+          }
+          return ans;
+      }
+  };
+
+  class Solution {
+  public:
+      std::vector<int> maximizeXor(std::vector<int>& nums, std::vector<std::vector<int>>& queries) {
+          Trie* t = new Trie();
+          for (int num : nums) {
+              t->insert(num);
+          }
+          int que_len = queries.size();
+          std::vector<int> ans(que_len);
+          for (int i = 0; i < que_len; ++i) {
+              ans[i] = t->getMaxXorVal(queries[i][0], queries[i][1]);
+          }
+          return ans;
+      }
+  };
