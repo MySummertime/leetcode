@@ -1,0 +1,66 @@
+use Trie structure to help traverse and define the right binary element
+
+  1. we create a class Trie to initialize every binary element within the array nums;
+  2. we create the property Trie.min_val to store the min digital value under each binary root of the Trie tree;
+  3. we create the properties Trie.left, Trie.right to record the next binary value we choose;
+  3. we try to choose the different binary value to make sure that we could get the max XOR result;
+  
+
+
+  class Trie:
+      bits = 30
+
+      def __init__(self):
+          self.left = None    #self.left == 1
+          self.right = None   #self.right == 0
+          self.min_val = float("inf")
+
+      def insert(self, val: int):
+          node = self
+          node.min_val = min(val, node.min_val)
+          for i in range(Trie.bits, -1, -1):
+              cur_bit = (val >> i) & 1
+              if cur_bit == 1:
+                  if not node.left:
+                      node.left = Trie()
+                  node = node.left
+              else:
+                  if not node.right:
+                      node.right = Trie()
+                  node = node.right
+              node.min_val = min(val, node.min_val)
+
+      def getMaxXorOfQue(self, val: int, limit: int) -> int:
+          node = self
+          if node.min_val > limit:
+              return -1
+          ans = 0
+          for i in range(Trie.bits, -1, -1):
+              cur_bit = (val >> i) & 1
+              paired_flag = False
+              if cur_bit == 0:
+                  if node.left and node.left.min_val <= limit:
+                      node = node.left
+                      paired_flag = True
+                  else:
+                      node = node.right
+              else:
+                  if node.right and node.right.min_val <= limit:
+                      node = node.right
+                      paired_flag = True
+                  else:
+                      node = node.left
+              if paired_flag:
+                  ans |= 1 << i
+          return ans
+
+  class Solution:
+
+      def maximizeXor(self, nums: List[int], queries: List[List[int]]) -> List[int]:
+          t = Trie()
+          for num in nums:
+              t.insert(num)
+          ans = [0] * len(queries)
+          for i, (v, l) in enumerate(queries):
+              ans[i] = t.getMaxXorOfQue(v, l)
+          return ans
