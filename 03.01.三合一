@@ -1,7 +1,10 @@
 1. use 1 array to simulate 3 stacks;
 
-  we use a one-dimensional array
 
+
+  we use a one-dimensional array
+  
+  
   /**
    * Your TripleInOne object will be instantiated and called as such:
    * TripleInOne* obj = new TripleInOne(stackSize);
@@ -10,8 +13,7 @@
    * int param_3 = obj->peek(stackNum);
    * bool param_4 = obj->isEmpty(stackNum);
   **/
-
-
+  
   class TripleInOne {
   public:
       TripleInOne(int stackSize) {
