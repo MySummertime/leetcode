@@ -1,0 +1,78 @@
+use finite-state machine
+
+
+  class Solution {
+  public:
+      vector<int> spiralOrder(vector<vector<int>>& matrix) {
+          if (!matrix.size() || !(matrix[0].size())) {
+              return {};
+          }
+          std::vector<int> ans;
+          int state = 1;  //initialize the state
+          return fsm(matrix, ans, state);
+      }
+
+  private:
+      vector<int> fsm(vector<vector<int>>& _matrix, vector<int> _ans, int _state) {
+          int rows_count = _matrix.size();
+          int cols_count = _matrix[0].size();
+          int r = 0;  int c = 0;
+          while (true) {
+              switch (_state) {
+              case 1:
+                  while (c < cols_count) {
+                      _ans.emplace_back(_matrix[r][c]);
+                      ++c;
+                  }
+                  --c;
+                  ++r;
+                  --cols_count;
+                  _state = 2;
+                  break;
+              case 2:
+                  while (r < rows_count) {
+                      _ans.emplace_back(_matrix[r][c]);
+                      ++r;
+                  }
+                  --r;
+                  --c;
+                  --rows_count;
+                  _state = 3;
+                  break;
+              case 3:
+                  while (c > c_flag) {
+                      _ans.emplace_back(_matrix[r][c]);
+                      --c;
+                  }
+                  ++c;
+                  --r;
+                  ++c_flag;
+                  _state = 4;
+                  break;
+              case 4:
+                  while (r > r_flag) {
+                      _ans.emplace_back(_matrix[r][c]);
+                      --r;
+                  }
+                  ++r;
+                  ++c;
+                  ++r_flag;
+                  _state = 1;
+                  break;
+              default:
+                  return {};
+              }
+              if ((_state == 1 || _state == 3) && rows_count <= r_flag) {
+                  break;
+              }
+              if ((_state == 2 || _state == 4) && cols_count <= c_flag) {
+                  break;
+              }
+          }
+          return _ans;
+      }
+
+  private:
+      int r_flag = 0;
+      int c_flag = -1;
+  };
