@@ -1,0 +1,26 @@
+use hash_map structure to store and iterate elements of all 4 arrays
+
+
+
+  /**
+   * @param {number[]} nums1
+   * @param {number[]} nums2
+   * @param {number[]} nums3
+   * @param {number[]} nums4
+   * @return {number}
+   */
+  let fourSumCount = function(nums1, nums2, nums3, nums4) {
+      let map = new Map();
+      nums1.forEach(i =>
+          nums2.forEach(j => {
+              map.set(i + j, map.has(i + j) ? map.get(i + j) + 1 : 1);
+          }
+      ))
+      let ans = 0;
+      for (const i of nums3) {
+          for (const j of nums4) {
+              map.has(- i - j) && (ans += map.get(- i - j));
+          }
+      }
+      return ans;
+  };
