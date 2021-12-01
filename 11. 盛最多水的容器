@@ -1,0 +1,13 @@
+use double pointers & greedy algorithm
+
+
+  function maxArea(height: number[]): number {
+      let l: number = 0;  let r: number = height.length - 1;
+      let tmp = 0; let ans: number = 0;
+      while (l < r) {
+          tmp = (r - l) * Math.min(height[l], height[r]);
+          ans = (ans >= tmp ? ans : tmp);
+          height[l] < height[r] ? ++l : --r;
+      }
+      return ans;
+  };
