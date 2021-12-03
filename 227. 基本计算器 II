@@ -1,0 +1,64 @@
+use unordered_map to help record the priority of operators
+
+
+  class Solution {
+  public:
+      int calculate(string s) {
+          s = "0" + s;
+          for (int i = 0; i < s.length(); ++i) {
+              char ch = s[i];
+              if (ch == ' ') {
+                  continue;
+              }
+              if (isdigit(ch)) {
+                  int j = i;
+                  int tmp = 0;
+                  while (j < s.length() && isdigit(s[j])) {
+                      tmp = tmp * 10 + (s[j++] - '0');
+                  }
+                  num.emplace(tmp);
+                  i = j - 1;
+              }
+              else {
+                  while (ops.size() && map[ch] <= map[ops.top()]) {
+                      operation();
+                  }
+                  ops.emplace(ch);
+              }
+          }
+          while (ops.size()) {
+              operation();
+          }
+          return num.top();
+      }
+
+  public:
+      void operation() {
+          int num2 = num.top();   num.pop();
+          int num1 = num.top();   num.pop();
+          char op = ops.top(); ops.pop();
+          int val = 0;
+          if (op == '+') {
+              val = num1 + num2;
+          }
+          else if (op == '-') {
+              val = num1 - num2;
+          }
+          else if (op == '*') {
+              val = num1 * num2;
+          }
+          else {
+              val = num1 / num2;
+          }
+          num.emplace(val);
+      }
+
+  private:
+      std::stack<int> num;
+      std::stack<char> ops;
+      std::unordered_map<char, int> map = {
+          {'+', 1}, {'-', 1},
+          {'*', 2}, {'/', 2},
+          {'*', 3}
+      };
+  };
