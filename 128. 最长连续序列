@@ -1,0 +1,27 @@
+set some tricks within the inner while-loop
+
+
+  class Solution {
+  public:
+      int longestConsecutive(vector<int>& nums) {
+          if (!nums.size()) {
+              return 0;
+          }
+          std::unordered_set<int> s;
+          for (int i : nums) {
+              s.insert(i);
+          }
+          int ans = 1 - (10 ^ 9);
+          for (int cur : s) {
+              if (s.count(cur - 1)) {continue;}
+              else {
+                  int tmp = 0;
+                  while (s.count(cur++)) {
+                      ++tmp;
+                  }
+                  ans = max(ans, tmp);
+              }
+          }
+          return ans;
+      }
+  };
