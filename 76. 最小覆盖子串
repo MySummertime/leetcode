@@ -1,0 +1,29 @@
+use hash method to remove duplicates & record amount
+
+
+  class Solution {
+  public:
+      string minWindow(string s, string t) {
+          std::unordered_map<char, int> ms, mt;
+          for (auto i : t) {
+              ++mt[i];
+          }
+          std::string ans;
+          int cnt = 0;
+          for (int l = 0, r = 0; r < s.length(); ++r) {
+              ++ms[s[r]];
+              if (ms[s[r]] <= mt[s[r]]) {
+                  ++cnt;
+              }
+              while (ms[s[l]] > mt[s[l]]) {
+                  --ms[s[l++]];
+              }
+              if (cnt == t.length()) {
+                  if (r - l + 1 < ans.length() || ans.empty()) {
+                      ans = s.substr(l, r - l + 1);
+                  }
+              }
+          }
+          return ans;
+      }
+  };
