@@ -1,0 +1,68 @@
+use merge sort method
+
+
+  /**
+   * Definition for singly-linked list.
+   */
+  struct ListNode {
+      int val;
+      ListNode *next;
+      ListNode() : val(0), next(nullptr) {}
+      ListNode(int x) : val(x), next(nullptr) {}
+      ListNode(int x, ListNode *next) : val(x), next(next) {}
+  };
+
+  class Solution {
+  public:
+      ListNode* sortList(ListNode* head) {
+          if (!head || !(head->next)) {
+              return head;
+          }
+          return sortList(head, nullptr);
+      }
+
+  private:
+      ListNode* sortList(ListNode* head, ListNode* tail) {
+          if (!head) {
+              return head;
+          }
+          if (head->next == tail) {
+              head->next = nullptr;
+              return head;
+          }
+          ListNode* slowPtr = head;
+          ListNode* fastPtr = head;
+          while (fastPtr != tail) {
+              slowPtr = slowPtr->next;
+              fastPtr = fastPtr->next;
+              if (fastPtr != tail) {
+                  fastPtr = fastPtr->next;
+              }
+          }
+          ListNode* midPtr = slowPtr;
+          return merge(sortList(head, midPtr), sortList(midPtr, tail));
+      }
+
+      ListNode* merge(ListNode* lHead, ListNode* rHead) {
+          if (!lHead || !(rHead)) {
+              return lHead ? lHead : rHead;
+          }
+          ListNode dummy;
+          ListNode* head = &dummy;
+          ListNode* lPtr = lHead;
+          ListNode* rPtr = rHead;
+          while (lPtr && rPtr) {
+              if (lPtr->val < rPtr->val) {
+                  head->next = lPtr;
+                  lPtr = lPtr->next;
+              }
+              else {
+                  head->next = rPtr;
+                  rPtr = rPtr->next;
+              }
+              head = head->next;
+          }
+          head->next = (lPtr ? lPtr : rPtr);
+          return dummy.next;
+      }
+  };
