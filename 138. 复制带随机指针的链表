@@ -1,0 +1,42 @@
+use merge sort method
+
+
+  /*
+  // Definition for a Node.
+  */
+  class Node {
+  public:
+      int val;
+      Node* next;
+      Node* random;
+  public:
+      Node(int _val) {
+          val = _val;
+          next = NULL;
+          random = NULL;
+      }
+  };
+
+  class Solution {
+  public:
+      Node* copyRandomList(Node* head) {
+          if (head == nullptr) {
+              return head;
+          }
+          for (Node* i = head; i; i = i->next->next) {
+              Node* newNode = new Node(i->val);
+              newNode->next = i->next;
+              i->next = newNode;
+          }
+          for (Node* i = head; i; i = i->next->next) {
+              i->next->random = (i->random ? i->random->next : nullptr);
+          }
+          Node* dummy = head->next;
+          for (Node* i = head; i; i = i->next) {
+              Node* newNode = i->next;
+              i->next = i->next->next;
+              newNode->next = (newNode->next ? newNode->next->next : nullptr);
+          }
+          return dummy;
+      }
+  };
