@@ -1,0 +1,60 @@
+use bfs method & a tricky flag char
+
+
+  class Solution {
+  public:
+      void solve(vector<vector<char>>& board) {
+          int h = board.size();
+          if (h == 1) {
+              return;
+          }
+          int w = board[0].size();
+          std::queue<pair<int, int>> que;
+          for (int i = 0; i < h; ++i) {
+              opt(board, que, i, 0);
+              opt(board, que, i, w - 1);
+          }
+          for (int i = 1; i < w - 1; ++i) {
+              opt(board, que, 0, i);
+              opt(board, que, h - 1, i);
+          }
+          while (que.size()) {
+              int x = que.front().first;
+              int y = que.front().second;
+              que.pop();
+              for (int i = 0; i < 4; ++i) {
+                  int curX = x + xDir[i];
+                  int curY = y + yDir[i];
+                  if (curX < 0 || curY < 0 || curX >= h || curY >= w || board[curX][curY] != 'O') {
+                      continue;
+                  }
+                  que.emplace(curX, curY);
+                  board[curX][curY] = '#';
+              }
+          }
+          for (int i = 0; i < h; ++i) {
+              for (int j = 0; j < w; ++j) {
+                  if (board[i][j] == '#') {
+                      board[i][j] = 'O';
+                  }
+                  else {
+                      if (board[i][j] == 'O') {
+                          board[i][j] = 'X';
+                      }
+                  }
+              }
+          }
+      }
+
+  private:
+      void opt(vector<vector<char>>& vec, queue<pair<int, int>>& que, int x, int y) {
+          if (vec[x][y] == 'O') {
+              que.emplace(x, y);
+              vec[x][y] = '#';
+          }
+      }
+
+  private:
+      const int xDir[4] = {1, -1, 0, 0};
+      const int yDir[4] = {0, 0, 1, -1};
+  };
