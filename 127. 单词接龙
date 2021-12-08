@@ -1,0 +1,69 @@
+use double direction bfs method
+
+
+  class Solution {
+  public:
+      int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+          std::unordered_set<string> set(wordList.begin(), wordList.end());
+          if(set.find(endWord) == set.end()) {
+              return 0;
+          }
+          std::unordered_set<string> bSet{beginWord};
+          std::unordered_set<string> eSet{endWord};
+          std::queue<string> bQue;
+          std::queue<string> eQue;
+          bQue.push(beginWord);
+          eQue.push(endWord);
+          return debfs(set, bQue, eQue, bSet, eSet);
+      }
+
+      int debfs(unordered_set<string> &set, queue<string> &bQue, queue<string> &eQue,
+      unordered_set<string> &bSet, unordered_set<string> &eSet){
+          int cnt = 0;
+          while (!bQue.empty() && !eQue.empty()) {
+              bool flag = 1;
+              if (bQue.size() > eQue.size()) {
+                  swap(bQue, eQue);
+                  flag = 0;
+              }
+              int len = bQue.size();
+              ++cnt;
+              while (len--){
+                  string str = bQue.front();
+                  bQue.pop();
+                  for (int i = 0; i < str.length(); ++i) {
+                      string tmpStr = str;
+                      for (char j = 'a'; j <= 'z'; ++j) {
+                          tmpStr[i] = j;
+                          if (set.find(tmpStr) == set.end()){
+                              continue;
+                          }
+                          if (flag && bSet.find(tmpStr) != bSet.end()) {
+                              continue;
+                          }
+                          if (!flag && eSet.find(tmpStr) != eSet.end()) {
+                              continue;
+                          }
+                          if (flag) {
+                              bSet.insert(tmpStr);
+                              if (eSet.find(tmpStr) != eSet.end()) {
+                                  return ++cnt;
+                              }
+                          }
+                          else {
+                              eSet.insert(tmpStr);
+                              if (bSet.find(tmpStr) != bSet.end()) {
+                                  return ++cnt;
+                              }
+                          }
+                          bQue.push(tmpStr);
+                      }
+                  }
+              }
+              if(!flag){
+                  swap(bQue, eQue);
+              }
+          }
+          return 0;
+      }
+  };
