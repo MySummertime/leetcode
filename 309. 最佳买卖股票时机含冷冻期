@@ -1,0 +1,20 @@
+use dp method
+
+  decrease the space cost by using several variable to record temporary status instead of using vector
+  
+
+  class Solution {
+  public:
+      int maxProfit(vector<int>& prices) {
+          if (!prices.size()) {
+              return 0;
+          }
+          int status_a = -prices[0];
+          int status_b = 0;
+          int status_c = 0;
+          for (int i = 1; i < prices.size(); ++i) {
+              tie(status_a, status_b, status_c) = make_tuple(max(status_a, status_c - prices[i]), status_a + prices[i], max(status_b, status_c));
+          }
+          return status_b > status_c ? status_b : status_c;
+      }
+  };
