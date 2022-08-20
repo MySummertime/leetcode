@@ -44,3 +44,35 @@ private:
         return root;
     }
 };
+
+/**
+class Solution {
+public:
+    // pre-order dfs
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        if (!nums.size()) {
+            return nullptr;
+        }
+        return dfs(nums, 0, nums.size() - 1);
+    }
+
+private:
+    TreeNode* dfs(const vector<int>& nums, int l, int r) {
+        if (l > r) {
+            return nullptr;
+        }
+        // update the current largest element
+        int idx = l;
+        for (int i = idx + 1; i <= r; ++i) {
+            if (nums[i] > nums[idx]) {
+                idx = i;
+            }
+        }
+        // [left, right]
+        TreeNode* root = new TreeNode(nums[idx]);
+        root->left = dfs(nums, l, idx - 1);
+        root->right = dfs(nums, idx + 1, r);
+        return root;
+    }
+};
+*/
