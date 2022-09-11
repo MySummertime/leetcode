@@ -9,6 +9,7 @@ class Solution:
         ans = ssum = 0
         # customized sort: efficiency descending
         for e, s in sorted(zip(efficiency, speed), reverse=1):
+            # simulate a less-than priority queue of speed
             heapq.heappush(vec, s)
             ssum += s
             if len(vec) > k:
