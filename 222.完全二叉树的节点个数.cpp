@@ -125,6 +125,32 @@ public:
 };
 */
 
+/*
+class Solution {
+public:
+    // utilizing complete tree attribute
+    int countNodes(TreeNode* root) {
+        int height = getHeight(root);
+        if (!height || height == 1) return height;
+        // if right child's height == height - 1, then left child is perfect
+        // and right child's counting can be calculated recursively
+        if (getHeight(root->right) == height - 1) {
+            return (1 << (height - 1)) + countNodes(root->right);
+        }
+        // if right child's height != height - 1, then right child, which is perfect, has a height == height - 2
+        // and left childs' counting can be calculated recursively
+        else {
+            return (1 << (height - 2)) + countNodes(root->left);
+        }
+    }
+
+private:
+    int getHeight(TreeNode* root) {
+        return !root ? 0 : getHeight(root->left) + 1;
+    }
+};
+*/
+
 class Solution {
 public:
     // binary search
