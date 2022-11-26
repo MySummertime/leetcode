@@ -13,9 +13,9 @@ public:
         long ans = 0L;
         stack<int> stk;
         stk.push(-1);
-        for (int r = 0; r < arr.size(); ++r) {
+        for (int r = 0, l; r < arr.size(); ++r) {
             while (stk.size() > 1 && arr[r] <= arr[stk.top()]) {
-                int l = stk.top();
+                l = stk.top();
                 stk.pop();
                 ans += (long) arr[l] * (l - stk.top()) * (r - l);
             }
