@@ -1,4 +1,8 @@
 #include <algorithm>
+#include <queue>
+
+using std::queue;
+
 
 struct TreeNode {
     int val;
@@ -22,6 +26,7 @@ public:
 };
 */
 
+/*
 class Solution {
 public:
     // recursion
@@ -42,4 +47,31 @@ private:
 
 private:
     int depth;
+};
+*/
+
+
+class Solution {
+public:
+    // traversal
+    int maxDepth(TreeNode* root) {
+        if (!root)  return 0;
+        queue<TreeNode*> que;
+        que.push(root);
+        int depth = 0;
+        while (!que.empty()) {
+            ++depth;
+            for (int i = 0, scale = que.size(); i < scale; ++i) {
+                TreeNode* node = que.front();
+                que.pop();
+                if (node->left) {
+                    que.push(node->left);
+                }
+                if (node->right) {
+                    que.push(node->right);
+                }
+            }
+        }
+        return depth;
+    }
 };
