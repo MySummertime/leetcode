@@ -1,2 +1,2 @@
 # leetcode
-record the progress of coding with leetcode
+The course of practising Algorithms and Data Structures in leetcode.
