@@ -22,5 +22,6 @@ private:
             a = b;
             b = tmp;
         }
+        return b;
     }
 };
