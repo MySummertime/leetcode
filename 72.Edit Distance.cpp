@@ -23,7 +23,8 @@ public:
                 if (word1[i - 1] == word2[j - 1])   //same characters
                     dp[i][j] = dp[i - 1][j - 1];    //no operation
                 else
-                    dp[i][j] = min({dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]}) + 1;
+                    dp[i][j] = std::min({dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]}) + 1;
         return dp[m][n];
     }
+
 };
