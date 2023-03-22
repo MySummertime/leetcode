@@ -17,14 +17,14 @@ public:
 
         vector<int> dp(len);    // the score of the person at each index
         int ans = 0;
-        for (int i = 0; i < len; ++i) {
-            dp[i] = players[i].second;
-            for (int j = 0; j < i; ++j) {
-                if (players[j].second <= players[i].second) {
-                    dp[i] = std::max(dp[i], dp[j] + players[i].second);
+        for (int r = 0; r < len; ++r) {
+            dp[r] = players[r].second;
+            for (int l = 0; l < r; ++l) {
+                if (players[l].second <= players[r].second) {
+                    dp[r] = std::max(dp[r], dp[l] + players[r].second);
                 }
             }
-            ans = ans > dp[i] ? ans : dp[i];
+            ans = ans > dp[r] ? ans : dp[r];
         }
         return ans;
     }
